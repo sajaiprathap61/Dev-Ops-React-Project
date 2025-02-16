@@ -1,48 +1,70 @@
 pipeline {
     agent any
+
     environment {
+        // Default values for Docker image and tag
         DOCKER_HUB_CREDENTIALS = 'dockerhub-credentials-id'
         GITHUB_CREDENTIALS = 'github-credentials-id'
+        DOCKER_TAG = 'latest'
+        EC2_USER = 'ubuntu'
+        EC2_IP = '52.221.189.20' // EC2 public IP address
+        CONTAINER_NAME = 'devops-build-devops-react-app-1' // Container name
+        SSH_KEY_PATH = '~/.ssh/key.pem' // Jenkins can use its credential store for security
     }
+
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'dev', url: 'https://github.com/yourusername/yourrepo.git'
-            }
-        }
-        stage('Build Image') {
+        stage('Checkout Code') {
             steps {
                 script {
-                    def imageTag = "${env.BRANCH_NAME == 'dev' ? 'dev' : 'prod'}"
-                    sh "./build.sh ${imageTag}"
+                    // Checkout the code from GitHub repository triggered by the webhook
+                    checkout scm
+                    // Set branch-related variables
+                    if (env.GIT_BRANCH ==~ /^origin\/dev/) {
+                        env.DOCKER_IMAGE = 'username/dev' // Docker image for dev
+                        env.BRANCH = 'dev' // Branch for dev
+                    } else if (env.GIT_BRANCH ==~ /^origin\/prod/) {
+                        env.DOCKER_IMAGE = 'username/prod' // Docker image for prod
+                        env.BRANCH = 'prod' // Branch for prod
+                    } else {
+                        error "Unsupported branch: ${env.GIT_BRANCH}" // Fail if branch is not dev or prod
+                    }
+                    echo "Building and deploying for branch: ${env.BRANCH}"
                 }
             }
         }
-        stage('Push to Docker Hub') {
+
+        stage('Build Docker Image') {
             steps {
                 script {
-                    def imageTag = "${env.BRANCH_NAME == 'dev' ? 'dev' : 'prod'}"
-                    sh "docker push your-dockerhub-username/${imageTag}:latest"
+                    // Run the build.sh script to build and push the Docker images
+                    sh 'chmod +x build.sh'  // Ensure the script is executable
+                    sh './build.sh'
                 }
             }
         }
-        stage('Deploy to Server') {
-            when {
-                branch 'dev'
-            }
+
+        stage('Deploy Docker Image') {
             steps {
                 script {
-                    sh "./deploy.sh ${imageTag}"
+                    // Run the deploy.sh script to deploy the Docker image to the EC2 instance
+                    sh 'chmod +x deploy.sh'  // Ensure the script is executable
+                    sh './deploy.sh'
                 }
             }
         }
     }
+
     post {
-        success {
-            echo 'Pipeline executed successfully!'
+        always {
+            echo 'Cleaning up...'
         }
+
+        success {
+            echo 'Deployment successful!'
+        }
+
         failure {
-            echo 'Pipeline execution failed!'
+            echo 'Deployment failed. Please check the logs.'
         }
     }
 }

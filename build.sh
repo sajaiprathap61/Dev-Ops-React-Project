@@ -4,7 +4,7 @@
 docker build -t app:dev .
 
 # Tag and push the dev image to the public Docker Hub
-docker tag app:dev sajaiprahap/dev:latest
+docker tag app:dev sajaiprathap/dev:latest
 docker push sajaiprathap/dev:latest
 
 # Build Docker image for production private repository
