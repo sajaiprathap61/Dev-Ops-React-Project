@@ -11,7 +11,7 @@ DOCKER_TAG="latest" # Docker tag (e.g., latest or any version)
 CONTAINER_NAME="devops-build-devops-react-app-1" # Name for the container
 
 # Optional: SSH key path
-SSH_KEY_PATH="$HOME/.ssh/key.pem" # Path to your EC2 private key file
+SSH_KEY_PATH="$HOME/ C:\Users\sajai\Downloads\awsRohitKey.pem" # Path to your EC2 private key file
 
 # SSH into EC2 instance and execute commands
 ssh -i "$SSH_KEY_PATH" "$EC2_USER@$EC2_IP" << EOF
