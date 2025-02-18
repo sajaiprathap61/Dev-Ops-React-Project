@@ -1,18 +1,11 @@
-# Use official Node.js image as base
-FROM node:16
+# Use Nginx to serve the React build
+FROM nginx:alpine
 
-# Set the working directory
-WORKDIR /app
+# Copy the pre-built React app from your local system to the container
+COPY ./build /usr/share/nginx/html
 
-# Copy package.json and install dependencies
-COPY package*.json ./
-RUN npm install
+# Expose port 80 to make the app accessible on the web
+EXPOSE 80
 
-# Copy the rest of the application code
-COPY . .
-
-# Expose the port 
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+# Start Nginx to serve the static files
+CMD ["nginx", "-g", "daemon off;"]
