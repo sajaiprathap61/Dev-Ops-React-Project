@@ -5,16 +5,16 @@ set -e
 
 # Variables
 EC2_USER="ubuntu"
-EC2_IP="52.221.189.20" # EC2 public IP address
+EC2_IP="54.255.189.150" # EC2 public IP address
 DOCKER_IMAGE="89ff7cfc82e1" # Docker image to pull
 DOCKER_TAG="latest" # Docker tag (e.g., latest or any version)
 CONTAINER_NAME="devops-build-devops-react-app-1" # Name for the container
 
 # Optional: SSH key path
-SSH_KEY_PATH="$HOME/ C:\Users\sajai\Downloads\awsRohitKey.pem" # Path to your EC2 private key file
+SSH_KEY_PATH="./key.pem" # Path to your EC2 private key file
 
 # SSH into EC2 instance and execute commands
-ssh -i "$SSH_KEY_PATH" "$EC2_USER@$EC2_IP" << EOF
+ssh -T -i "$SSH_KEY_PATH" "$EC2_USER@$EC2_IP" << EOF
   # Update packages
   sudo apt update -y
 
