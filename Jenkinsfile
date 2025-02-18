@@ -7,9 +7,9 @@ pipeline {
         GITHUB_CREDENTIALS = 'github-credentials-id'
         DOCKER_TAG = 'latest'
         EC2_USER = 'ubuntu'
-        EC2_IP = '52.221.189.20' // EC2 public IP address
+        EC2_IP = '54.255.189.150' // EC2 public IP address
         CONTAINER_NAME = 'devops-build-devops-react-app-1' // Container name
-        SSH_KEY_PATH = '~/.ssh/key.pem' // Jenkins can use its credential store for security
+        SSH_KEY_PATH = 'Ubuntu' // Jenkins can use its credential store for security
     }
 
     stages {
