@@ -20,10 +20,10 @@ pipeline {
                     checkout scm
                     // Set branch-related variables
                     if (env.GIT_BRANCH ==~ /^origin\/dev/) {
-                        env.DOCKER_IMAGE = 'username/dev' // Docker image for dev
+                        env.DOCKER_IMAGE = 'sajaiprathap/dev' // Docker image for dev
                         env.BRANCH = 'dev' // Branch for dev
                     } else if (env.GIT_BRANCH ==~ /^origin\/prod/) {
-                        env.DOCKER_IMAGE = 'username/prod' // Docker image for prod
+                        env.DOCKER_IMAGE = 'sajaiprathap/prod' // Docker image for prod
                         env.BRANCH = 'prod' // Branch for prod
                     } else {
                         error "Unsupported branch: ${env.GIT_BRANCH}" // Fail if branch is not dev or prod
