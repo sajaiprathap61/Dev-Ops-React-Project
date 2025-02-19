@@ -1,4 +1,4 @@
-@!/bin/bash
+#!/bin/bash
 
 # Build Docker image
 docker build -t app:dev .
