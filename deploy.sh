@@ -5,7 +5,7 @@ set -e
 
 # Variables
 EC2_USER="ubuntu"
-EC2_IP="54.255.189.150" # EC2 public IP address
+EC2_IP="52.221.181.206" # EC2 public IP address
 DOCKER_IMAGE="88b7abd1d97d" # Docker image to pull
 DOCKER_TAG="latest" # Docker tag (e.g., latest or any version)
 CONTAINER_NAME="devops-build-devops-react-app-1" # Name for the container
