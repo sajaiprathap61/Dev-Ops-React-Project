@@ -13,25 +13,25 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                script {
-                    // Checkout the code from GitHub repository triggered by the webhook
-                    checkout scm
-                    // Set branch-related variables
-                    if (env.GIT_BRANCH ==~ /^origin\/dev/) {
-                        env.DOCKER_IMAGE = 'sajaiprathap/dev' // Docker image for dev
-                        env.BRANCH = 'dev' // Branch for dev
-                    } else if (env.GIT_BRANCH ==~ /^origin\/prod/) {
-                        env.DOCKER_IMAGE = 'sajaiprathap/prod' // Docker image for prod
-                        env.BRANCH = 'prod' // Branch for prod
-                    } else {
-                        error "Unsupported branch: ${env.GIT_BRANCH}" // Fail if branch is not dev or prod
-                    }
-                    echo "Building and deploying for branch: ${env.BRANCH}"
-                }
-            }
-        }
+        // stage('Checkout Code') {
+        //     steps {
+        //         script {
+        //             // Checkout the code from GitHub repository triggered by the webhook
+        //             checkout scm
+        //             // Set branch-related variables
+        //             if (env.GIT_BRANCH ==~ /^origin\/dev/) {
+        //                 env.DOCKER_IMAGE = 'sajaiprathap/dev' // Docker image for dev
+        //                 env.BRANCH = 'dev' // Branch for dev
+        //             } else if (env.GIT_BRANCH ==~ /^origin\/prod/) {
+        //                 env.DOCKER_IMAGE = 'sajaiprathap/prod' // Docker image for prod
+        //                 env.BRANCH = 'prod' // Branch for prod
+        //             } else {
+        //                 error "Unsupported branch: ${env.GIT_BRANCH}" // Fail if branch is not dev or prod
+        //             }
+        //             echo "Building and deploying for branch: ${env.BRANCH}"
+        //         }
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
