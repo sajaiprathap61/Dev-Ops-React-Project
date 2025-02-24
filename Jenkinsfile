@@ -53,22 +53,22 @@ pipeline {
         //     }
         // }
 
-        stage('Deploy to Deployment server') {
-            steps {
-                script {
-                    sshagent(['ec2ssh']) {
-                        sh """
-                            ssh -v -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
-                            docker pull sajaiprathap/dev:${DOCKER_TAG};
-                            docker ps -q | xargs -r docker stop;
-                            docker ps -a -q | xargs -r docker rm;
-                            docker run -d -p 80:4000 sajaiprathap/dev:${DOCKER_TAG}
-                            "
-                        """
-                    }
-                }    
-            }
-        }
+        // stage('Deploy to Deployment server') {
+        //     steps {
+        //         script {
+        //             sshagent(['ec2ssh']) {
+        //                 sh """
+        //                     ssh -v -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
+        //                     docker pull sajaiprathap/dev:${DOCKER_TAG};
+        //                     docker ps -q | xargs -r docker stop;
+        //                     docker ps -a -q | xargs -r docker rm;
+        //                     docker run -d -p 80:4000 sajaiprathap/dev:${DOCKER_TAG}
+        //                     "
+        //                 """
+        //             }
+        //         }    
+        //     }
+        // }
 
 
 
