@@ -43,14 +43,32 @@ pipeline {
             }
         }
 
-        stage('Deploy Docker Image') {
-            steps {
-                script {
-                    // Run the deploy.sh script to deploy the Docker image to the EC2 instance
-                    sh 'chmod +x deploy.sh'  // Ensure the script is executable
-                    sh './deploy.sh' ${SSH_KEY_PATH}
-                }
+        // stage('Deploy Docker Image') {
+        //     steps {
+        //         script {
+        //             // Run the deploy.sh script to deploy the Docker image to the EC2 instance
+        //             sh 'chmod +x deploy.sh'  // Ensure the script is executable
+        //             sh './deploy.sh' ${SSH_KEY_PATH}
+        //         }
+        //     }
+        // }
+
+        stage('Deploy to Deployment server') {
+          steps {
+            script {
+              sshagent(['SSH_KEY_PATH']) {
+                // Execute the command within the  sshagent block using sh step
+                sh 
+                '''
+                ssh -o StrictHostKeyChecking=no ubuntu@18.136.206.232 "
+                docker pull sajaiprathap/dev:latest;
+                docker ps - q | xargs docker stop;
+                docker ps - a - q | xargs docker rm;
+                docker run - d - p 80:3000 sajaiprathap/dev:latest "
+                '''
+              }
             }
+          }
         }
     }
 
