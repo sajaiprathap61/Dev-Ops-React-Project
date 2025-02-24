@@ -67,8 +67,10 @@ stage('Deploy to Deployment server') {
                         docker run -d -p 80:4000 sajaiprathap/dev:latest
                     "
                 '''
-          }
+              }
+        }    
     }
+}
 
     post {
         always {
