@@ -57,19 +57,19 @@ pipeline {
             steps {
                 script {
                     sshagent(['ec2ssh']) {
-                        // Execute the command within the sshagent block using sh step
-                        sh '''
-                        ssh -v -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
+                        sh """
+                            ssh -v -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
                             docker pull sajaiprathap/dev:${DOCKER_TAG};
                             docker ps -q | xargs -r docker stop;
                             docker ps -a -q | xargs -r docker rm;
-                            docker run -d -p 80:3000 sajaiprathap/dev:${DOCKER_TAG}
-                        "
-                    '''
+                            docker run -d -p 80:4000 sajaiprathap/dev:${DOCKER_TAG}
+                            "
+                        """
                     }
                 }    
             }
         }
+
 
 
     post {
