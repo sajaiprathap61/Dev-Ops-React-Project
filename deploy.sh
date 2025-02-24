@@ -12,7 +12,7 @@ CONTAINER_NAME="devops-build-devops-react-app-1" # Name for the container
 chmod 400 key.pem
 
 # Optional: SSH key path
-SSH_KEY_PATH="./key.pem" # Path to your EC2 private key file
+# SSH_KEY_PATH="./key.pem" # Path to your EC2 private key file
 
 # SSH into EC2 instance and execute commands
 ssh -T -i "$SSH_KEY_PATH" -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" << EOF
