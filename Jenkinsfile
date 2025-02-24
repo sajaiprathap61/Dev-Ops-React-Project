@@ -13,25 +13,25 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout Code') {
-        //     steps {
-        //         script {
-        //             // Checkout the code from GitHub repository triggered by the webhook
-        //             checkout scm
-        //             // Set branch-related variables
-        //             if (env.GIT_BRANCH ==~ /^origin\/dev/) {
-        //                 env.DOCKER_IMAGE = 'sajaiprathap/dev' // Docker image for dev
-        //                 env.BRANCH = 'dev' // Branch for dev
-        //             } else if (env.GIT_BRANCH ==~ /^origin\/prod/) {
-        //                 env.DOCKER_IMAGE = 'sajaiprathap/prod' // Docker image for prod
-        //                 env.BRANCH = 'prod' // Branch for prod
-        //             } else {
-        //                 error "Unsupported branch: ${env.GIT_BRANCH}" // Fail if branch is not dev or prod
-        //             }
-        //             echo "Building and deploying for branch: ${env.BRANCH}"
-        //         }
-        //     }
-        // }
+        stage('Checkout Code') {
+            steps {
+                script {
+                    // Checkout the code from GitHub repository triggered by the webhook
+                    checkout scm
+                    // Set branch-related variables
+                    if (env.GIT_BRANCH ==~ /^origin\/dev/) {
+                        env.DOCKER_IMAGE = 'sajaiprathap/dev' // Docker image for dev
+                        env.BRANCH = 'dev' // Branch for dev
+                    } else if (env.GIT_BRANCH ==~ /^origin\/prod/) {
+                        env.DOCKER_IMAGE = 'sajaiprathap/prod' // Docker image for prod
+                        env.BRANCH = 'prod' // Branch for prod
+                    } else {
+                        error "Unsupported branch: ${env.GIT_BRANCH}" // Fail if branch is not dev or prod
+                    }
+                    echo "Building and deploying for branch: ${env.BRANCH}"
+                }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -43,34 +43,16 @@ pipeline {
             }
         }
 
-        // stage('Deploy Docker Image') {
-        //     steps {
-        //         script {
-        //             // Run the deploy.sh script to deploy the Docker image to the EC2 instance
-        //             sh 'chmod +x deploy.sh'  // Ensure the script is executable
-        //             sh './deploy.sh'
-        //         }
-        //     }
-        // }
-
-        // stage('Deploy to Deployment server') {
-        //     steps {
-        //         script {
-        //             sshagent(['ec2ssh']) {
-        //                 sh """
-        //                     ssh -v -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
-        //                     docker pull sajaiprathap/dev:${DOCKER_TAG};
-        //                     docker ps -q | xargs -r docker stop;
-        //                     docker ps -a -q | xargs -r docker rm;
-        //                     docker run -d -p 80:4000 sajaiprathap/dev:${DOCKER_TAG}
-        //                     "
-        //                 """
-        //             }
-        //         }    
-        //     }
-        // }
-
-
+        stage('Deploy Docker Image') {
+            steps {
+                script {
+                    // Run the deploy.sh script to deploy the Docker image to the EC2 instance
+                    sh 'chmod +x deploy.sh'  // Ensure the script is executable
+                    sh './deploy.sh'
+                }
+            }
+        }
+    }
 
     post {
         always {
@@ -85,5 +67,4 @@ pipeline {
             echo 'Deployment failed. Please check the logs.'
         }
     }
-}
 }
