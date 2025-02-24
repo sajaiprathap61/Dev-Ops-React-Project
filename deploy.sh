@@ -9,7 +9,7 @@ EC2_IP="18.136.206.232" # EC2 public IP address
 DOCKER_IMAGE="88b7abd1d97d" # Docker image to pull
 DOCKER_TAG="latest" # Docker tag (e.g., latest or any version)
 CONTAINER_NAME="devops-build-devops-react-app-1" # Name for the container
-chmod 400 key.pem
+SSH_KEY_PATH=$1
 
 # Optional: SSH key path
 # SSH_KEY_PATH="./key.pem" # Path to your EC2 private key file
