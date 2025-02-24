@@ -48,7 +48,7 @@ pipeline {
                 script {
                     // Run the deploy.sh script to deploy the Docker image to the EC2 instance
                     sh 'chmod +x deploy.sh'  // Ensure the script is executable
-                    sh './deploy.sh'
+                    sh './deploy.sh' ${SSH_KEY_PATH}
                 }
             }
         }
