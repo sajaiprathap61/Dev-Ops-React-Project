@@ -59,7 +59,7 @@ pipeline {
             sshagent(['SSH_KEY_PATH']) {
                 // Execute the command within the sshagent block using the 'sh' step
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@18.136.206.232 "
+                ssh -o StrictHostKeyChecking=no ubuntu@18.136.196.121 "
                 docker pull sajaiprathap/dev:latest;
                 docker ps -q | xargs docker stop;
                 docker ps -a -q | xargs docker rm;
