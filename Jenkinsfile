@@ -63,7 +63,7 @@ pipeline {
                 docker pull sajaiprathap/dev:latest;
                 docker ps -q | xargs docker stop;
                 docker ps -a -q | xargs docker rm;
-                docker run -d -p 80:3000 sajaiprathap/dev:latest "
+                docker run -d -p 80:80 sajaiprathap/dev:latest "
                 '''
             }
         }
