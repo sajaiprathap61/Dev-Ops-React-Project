@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker login -u sajaiprathap -p dckr_pat_BxOBHLxn3P7InN-vppZwSJwoj8E
+docker login -u sajaiprathap -p dckr_pat_ZOYE6uBJrHsWQJAXgpTA9JemzGw
 # Build Docker image
 docker build -t sajaiprathap/dev .
 
