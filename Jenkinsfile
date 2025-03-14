@@ -7,7 +7,7 @@ pipeline {
         GITHUB_CREDENTIALS = 'github-credentials-id'
         DOCKER_TAG = 'latest'
         EC2_USER = 'ubuntu'
-        EC2_IP = '54.255.171.147' // EC2 public IP address
+        EC2_IP = '13.250.50.210' // EC2 public IP address
         CONTAINER_NAME = 'devops-build-devops-react-app-1' // Container name
         SSH_KEY_PATH = 'Ubuntu' // Jenkins can use its credential store for security
     }
@@ -59,7 +59,7 @@ pipeline {
             sshagent(['SSH_KEY_PATH']) {
                 // Execute the command within the sshagent block using the 'sh' step
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@54.255.171.147 "
+                ssh -o StrictHostKeyChecking=no ubuntu@13.250.50.210 "
                 docker pull sajaiprathap/dev:latest;
                 docker ps -q | xargs docker stop;
                 docker ps -a -q | xargs docker rm;
